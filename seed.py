@@ -16,7 +16,7 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'statsbombApp.settings'
 django.setup()
 global i
 i=0
-from api.models import Competition, Match, Player, Pass
+from api.models import Competition, Match, Player, Pass, Event
 
 
 possibleSeasons = [
@@ -36,19 +36,26 @@ def createEvent(player, matchModelObj, sbEventsDict):
     
     for playerEvent in playerEvents:
         if playerEvent['type'] == 'Pass' and \
-            Pass.objects.filter(event_uuid = playerEvent['id']).count() == 0:
-            newEvent = Pass.create(
-                event_uuid = playerEvent['id'],
-                player = player,
-                match = matchModelObj,
-                type = playerEvent['type'],
-                location_start = playerEvent['location'],
-                location_end = playerEvent['pass_end_location'],
-                pass_outcome = playerEvent['pass_outcome']
-            )
+            Event.objects.filter(event_uuid = playerEvent['id']).count() == 0:
+                newEvent = Event.create(
+                    event_uuid = playerEvent['id'],
+                    player = player,
+                    match = matchModelObj,
+                    type = playerEvent['type']
+                )
+                newEvent.save()
+                print(newEvent, i)
+
+                newPass  = Pass.create(
+                    event = newEvent,
+                    location_start = playerEvent['location'],
+                    location_end = playerEvent['pass_end_location'],
+                    pass_outcome = playerEvent['pass_outcome']
+                )
+
+                newPass.save()
+                
             
-            newEvent.save()
-            print(newEvent, i)
 
 
 def getSbEventsDictionary(match):

@@ -62,6 +62,11 @@ for m in matches:
     awayLineupInstance.save()
     awayLineupInstance.players.set(away_team_players) 
 
+    m.away_lineup = awayLineupInstance
+    m.home_lineup = homeLineupInstance
+
+    m.save()
+
 
     print(m.away_lineup)
 xd = 3

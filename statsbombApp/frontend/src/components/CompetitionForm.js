@@ -14,7 +14,7 @@ const CompetitionForm = props =>{
     const [matches, setMatches] = useState([])
 
     const fetchCompetitions = async()=>{
-        let response = await fetch("http://127.0.0.1:8000/api/competitions");
+        let response = await fetch("http://127.0.0.1:8000/api/competitions/");
         let data = await response.json();
        
         setCompetitions(data)
@@ -73,7 +73,7 @@ const CompetitionForm = props =>{
         
         const fetchMatches = async()=>{
             console.log(formCompetition.pk)
-            let response = await fetch(`http://127.0.0.1:8000/api/competitions/${formCompetition.pk}/matches`);
+            let response = await fetch(`http://127.0.0.1:8000/api/competitions/${formCompetition.pk}/matches/`);
             let matchesData = await response.json();
             console.log(matchesData)
 
