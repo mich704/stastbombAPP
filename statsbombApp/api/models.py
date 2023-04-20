@@ -1,6 +1,9 @@
 from django.db import models
 import uuid
-
+from django.core.files import File
+from django.core.files.images import ImageFile
+import tempfile
+import os
 # Create your models here.
 
 class Season(models.Model):
@@ -71,10 +74,10 @@ class Match(models.Model):
     match_id = models.IntegerField(primary_key=True)
     competition = models.ForeignKey(Competition, on_delete=models.CASCADE, db_constraint=False)
     home_team = models.CharField(max_length=20)
-    home_lineup = models.OneToOneField(Lineup,on_delete=models.CASCADE, null=True, related_name='home_lineup')
+    home_lineup = models.OneToOneField(Lineup,on_delete=models.CASCADE, null=True,  db_constraint=False,  related_name='home_lineup')
    
     away_team = models.CharField(max_length=20)
-    away_lineup = models.OneToOneField(Lineup, on_delete=models.CASCADE, null=True, related_name='away_lineup')
+    away_lineup = models.OneToOneField(Lineup, on_delete=models.CASCADE, null=True,  db_constraint=False, related_name='away_lineup')
 
     home_score = models.IntegerField()
     away_score = models.IntegerField()
@@ -157,12 +160,27 @@ class Pass(models.Model):
         return f"{self.type} {self.player.player} {self.pass_end_location_X} {self.pass_end_location_Y}"
     
 
-class EventImage(models.Model):
-    event = models.OneToOneField(Event, on_delete=models.CASCADE, null=True, related_name='away_lineup')
-    image = models.ImageField(upload_to ='uploads/')
+class PlayerMatchRaport(models.Model):
+    match = models.ForeignKey(Match, on_delete=models.CASCADE)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    raport_type = models.CharField(max_length=30)
+    image = models.ImageField(upload_to='media')
+
+    @classmethod
+    def create(cls, player, match, raport_type, tmp_img):
+
+        newRaport = cls(player=player, match=match, raport_type=raport_type)
+
+        with open(tmp_img.name, 'rb') as f:
+            newRaport.image.save(f'match_{match.match_id}/{raport_type}s/player_{player.player_id}.png', ImageFile(f))
+
+       
+
+        os.unlink(tmp_img.name)
+        return newRaport
+    
+
 # class Shot(Event):
 #     event = models.OneToOneField(Event, parent_link=True, on_delete=models.PROTECT)
 #     goal = models.BooleanField()
-
-
 

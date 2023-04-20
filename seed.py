@@ -72,7 +72,7 @@ def getSbEventsDictionary(match):
     for ev in sbEventsDict:
         
         if Player.objects.filter(player_id = ev['player_id']).count() == 0:
-            print(ev['player'])
+            #print(ev['player'])
             newPlayer = Player.create(player=ev['player'], player_id=ev['player_id'] )
             newPlayer.save()     
             createEvent(newPlayer, matchModelObj, sbEventsDict)
@@ -116,7 +116,7 @@ def seedMatchModel(competition):
     #sbMatchesDict = getSbMatchesDictionary()
     for match in matchesDict:
         match_id, home_team, away_team, home_score, away_score = match.values()
-        if home_team == 'Argentina' and away_team == 'France':
+        if home_team == 'Poland' or away_team == 'Poland':
             if Match.objects.filter(match_id = match_id).count() == 0:
                 
                 newMatch = Match.create(match_id, competition, home_team, away_team, home_score, away_score)
@@ -156,5 +156,6 @@ def main():
 
 if __name__ == '__main__':
     main()
-
+    import subprocess
+    subprocess.Popen("seedLineups.py 1", shell=True)
 
