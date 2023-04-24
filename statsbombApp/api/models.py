@@ -4,6 +4,7 @@ from django.core.files import File
 from django.core.files.images import ImageFile
 import tempfile
 import os
+from django.conf import settings
 # Create your models here.
 
 class Season(models.Model):
@@ -164,19 +165,20 @@ class PlayerMatchRaport(models.Model):
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     raport_type = models.CharField(max_length=30)
-    image = models.ImageField(upload_to='media')
-
+    image = models.ImageField(upload_to='statsbombApp/frontend/public/media')
+    
     @classmethod
     def create(cls, player, match, raport_type, tmp_img):
+        print(settings.MEDIA_ROOT)
 
         newRaport = cls(player=player, match=match, raport_type=raport_type)
-
+        print(tmp_img.name)
+       
         with open(tmp_img.name, 'rb') as f:
             newRaport.image.save(f'match_{match.match_id}/{raport_type}s/player_{player.player_id}.png', ImageFile(f))
-
-       
-
         os.unlink(tmp_img.name)
+        
+        
         return newRaport
     
 

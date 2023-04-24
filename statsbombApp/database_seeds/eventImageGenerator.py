@@ -68,9 +68,12 @@ def createPassmap(player, match):
     # except:
     #     os.makedirs(f'statsbombApp/api/images/events/passmaps/match_{match.match_id}')
     #     plt.savefig(f'statsbombApp/api/images/events/passmaps/match_{match.match_id}/player_{player.player_id}.png', format = 'png')
+   
     with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
             plt.savefig(tmp_file, format='png')
+    plt.close()
     return tmp_file
+  
         
 
     

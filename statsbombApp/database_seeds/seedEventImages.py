@@ -44,6 +44,9 @@ for m in matches:
         
 
     for p in awayLineupPlayers:
-        img = createPassmap(p, m)
+        
+        tmp_img = createPassmap(p, m)
+        playerRaport = PlayerMatchRaport.create(player=p, match=m, raport_type='passmap', tmp_img=tmp_img)
+        playerRaport.save()
     
 
