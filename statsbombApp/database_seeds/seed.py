@@ -5,11 +5,12 @@ from setuptools import setup, find_packages
 import os
 import sys
 import argparse
+import seedLineups
 
 
 import django
 import math
-from django.forms.models import model_to_dict
+
 
 sys.path.append('statsbombApp')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'statsbombApp.settings'
@@ -116,7 +117,7 @@ def seedMatchModel(competition):
     #sbMatchesDict = getSbMatchesDictionary()
     for match in matchesDict:
         match_id, home_team, away_team, home_score, away_score = match.values()
-        if home_team == 'Poland' or away_team == 'Poland':
+        if home_team == 'Brazil' and away_team == 'Switzerland':
             if Match.objects.filter(match_id = match_id).count() == 0:
                 
                 newMatch = Match.create(match_id, competition, home_team, away_team, home_score, away_score)
@@ -152,10 +153,11 @@ def main():
     
     sbCompetitionDict = getSbCompetitionsDictionary()
     seedCompetitionModel(sbCompetitionDict)
+    seedLineups.main()
+    
 
 
 if __name__ == '__main__':
     main()
-    import subprocess
-    subprocess.Popen("seedLineups.py 1", shell=True)
+    
 

@@ -13,8 +13,6 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'statsbombApp.settings'
 django.setup()
 
 from api.models import Match, Lineup, Event, PlayerMatchRaport
-from django.db.models import ImageField
-from django.core.files.images import ImageFile
 
 def sbDFtoDict(sbData, columns):
     sbData = pd.DataFrame(sbData, columns=columns)
@@ -34,19 +32,14 @@ for m in matches:
     awayLineupPlayers = awayLineup.players.all()
 
     for p in homeLineupPlayers:
-        tmp_img = createPassmap(p, m)
-        
-        # imgField = ImageField(img, upload_to=f'events/passmaps/match_{m.match_id}/player_{p.player_id}.png')
-        # img.save()
-        playerRaport = PlayerMatchRaport.create(player=p, match=m, raport_type='passmap', tmp_img=tmp_img)
-        playerRaport.save()
-        xd =1
-        
-
+        if PlayerMatchRaport.objects.filter(player=p, match=m, raport_type='passmap').count() == 0:
+            tmp_img = createPassmap(p, m)
+            playerRaport = PlayerMatchRaport.create(player=p, match=m, raport_type='passmap', tmp_img=tmp_img)
+       
     for p in awayLineupPlayers:
+        if PlayerMatchRaport.objects.filter(player=p, match=m, raport_type='passmap').count() == 0:
+            tmp_img = createPassmap(p, m)
+            playerRaport = PlayerMatchRaport.create(player=p, match=m, raport_type='passmap', tmp_img=tmp_img)
         
-        tmp_img = createPassmap(p, m)
-        playerRaport = PlayerMatchRaport.create(player=p, match=m, raport_type='passmap', tmp_img=tmp_img)
-        playerRaport.save()
     
 

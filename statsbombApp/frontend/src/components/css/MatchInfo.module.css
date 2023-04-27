@@ -23,6 +23,6 @@ li {
     margin-bottom: 5px;
 }
 
-#wrapper {
+.wrapper {
     display: flex;
 }

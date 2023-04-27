@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Competition, Match, Player, Pass, Lineup
+from .models import Competition, Match, Player, Pass, Lineup, PlayerMatchRaport
 
 class CompetitionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -52,3 +52,9 @@ class PassSerializer(serializers.ModelSerializer):
         fields = (  'event_uuid', 'match', 'player',
                     'type', 'location_start_X', 'location_start_Y',
                     'location_end_X', 'location_end_Y', 'pass_outcome')
+        
+
+class PlayerMatchRaportSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PlayerMatchRaport
+        fields = ('id', 'raport_type', 'match_id', 'player_id', 'image')

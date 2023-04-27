@@ -12,9 +12,6 @@ import {Button} from '@material-ui/core/';
 
 const Match = (props) => {
 
-  const fetchMatchData = (match_id) => () =>{
-    console.log('match ', match_id)
-  }
   
   return (
         <TableBody>
@@ -27,7 +24,7 @@ const Match = (props) => {
               <TableCell align="right">{props.away_score}</TableCell>
               <TableCell align="right">{props.away_team}</TableCell>
               <TableCell align="right">
-                  <Button variant="contained" size="small" href={`/matches/${props.match_id}`} onClick={fetchMatchData(props.match_id)}>
+                  <Button variant="contained" size="small" href={`/matches/${props.match_id}`}>
                     Match Info
                   </Button>
               </TableCell>

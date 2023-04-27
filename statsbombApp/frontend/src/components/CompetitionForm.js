@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {Button, TextField, FormControl, Select, InputLabel, MenuItem, Grid   } from '@material-ui/core/';
+import {Button, FormControl, Select, InputLabel, MenuItem, Grid   } from '@material-ui/core/';
 
 import Matches from "./Matches";
-import matchesStyles from './Matches.module.css';
+import matchesStyles from './css/Matches.module.css';
 
 
 const CompetitionForm = props =>{

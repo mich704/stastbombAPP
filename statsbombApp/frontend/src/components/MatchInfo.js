@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import Lineup from "./Lineup";
-import './MatchInfo.css';
+import matchInfoStyles from './css/MatchInfo.module.css';
 
 
 
@@ -35,14 +35,17 @@ export default function MatchInfo() {
       setMatchInfo(data)
     }
       fetchMatchInfo()
-  },[])  
+  }, []);
     
   return (
-    <div id="wrapper">
+    <div className={matchInfoStyles.wrapper}>
+      <div className={matchInfoStyles.team}>
+        <Lineup team={matchInfo.home_team} lineup={homeLineup}/>  
+      </div>      
       
-      <Lineup team={matchInfo.home_team} lineup={homeLineup}/>
-      <Lineup team={matchInfo.away_team} lineup={awayLineup}/>
-
+      <div className={matchInfoStyles.team}>
+        <Lineup team={matchInfo.away_team} lineup={awayLineup}/>
+      </div>
       
     </div>
   );

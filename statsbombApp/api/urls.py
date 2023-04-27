@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CompetitionView, MatchView
+from .views import CompetitionView, MatchView, PlayerMatchRaportView
 
 urlpatterns = [
     path('', CompetitionView.as_view({'get': 'get'})),
@@ -8,5 +8,7 @@ urlpatterns = [
     path('competitions/<int:competition_id>/matches/', CompetitionView.as_view({'get': 'get_competition_matches'})),
     path('competitions/<int:competition_id>/matches/<int:match_id>/', MatchView.as_view()), 
     path('matches/', MatchView.as_view()),
-    path('matches/<int:match_id>/', MatchView.as_view())
+    path('matches/<int:match_id>/', MatchView.as_view()),
+    path('matches/<int:match_id>/<int:player_id>/passmap', PlayerMatchRaportView.as_view())
+
 ]

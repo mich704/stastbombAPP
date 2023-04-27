@@ -172,14 +172,19 @@ class PlayerMatchRaport(models.Model):
         print(settings.MEDIA_ROOT)
 
         newRaport = cls(player=player, match=match, raport_type=raport_type)
-        print(tmp_img.name)
        
-        with open(tmp_img.name, 'rb') as f:
-            newRaport.image.save(f'match_{match.match_id}/{raport_type}s/player_{player.player_id}.png', ImageFile(f))
-        os.unlink(tmp_img.name)
+       
+        if tmp_img is not None:
+            print(tmp_img.name)
+            with open(tmp_img.name, 'rb') as f:
+                newRaport.image.save(f'match_{match.match_id}/{raport_type}s/player_{player.player_id}.png', ImageFile(f))
+            os.unlink(tmp_img.name)
+            
+            newRaport.save()
         
-        
-        return newRaport
+            return newRaport
+        else:
+            pass
     
 
 # class Shot(Event):
