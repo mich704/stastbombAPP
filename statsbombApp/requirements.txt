@@ -1,0 +1,9 @@
+os
+uuid
+django
+djangorestframework
+django-cors-headers
+statsbombpy
+sqlite3
+pandas
+argparse

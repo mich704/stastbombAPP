@@ -25,14 +25,14 @@ export default function PlayerModal(props) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-        {passmap && 
+       
           <>
             <li>{props.player}</li>
               <Button variant="contained" color="primary" onClick={() => setIsOpen(true)}>Preview Passmap</Button>
           </>
-        }
+      
 
-        {isOpen && passmap  && 
+        {isOpen   && 
           <Lightbox
             mainSrc={`/media/match_${props.id}/passmaps/player_${props.player_id}.png`}
             onCloseRequest={() => setIsOpen(false)}
